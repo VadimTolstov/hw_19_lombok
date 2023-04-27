@@ -1,22 +1,26 @@
 package hw_19_lombok;
 
 import com.google.gson.Gson;
-
-import hw_19_lombok.models.CreateUserBodyModel;
-import hw_19_lombok.models.CreateUserResponseModel;
+import hw_19_lombok.models.*;
+import hw_19_lombok.models.list_models.DataResponseModel;
 import hw_19_lombok.testdata.RandomUser;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import static hw_19_lombok.specs.CreateSpec.createnRequestSpec;
+import static hw_19_lombok.specs.CreateSpec.сreateResponseSpec;
+import static hw_19_lombok.specs.UserSpec.userRequestSpec;
+import static hw_19_lombok.specs.UserSpec.userResponseSpec;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegressTests {
 
@@ -24,69 +28,68 @@ public class RegressTests {
 
     @Test
     void сreateUserTest() {
+        step("Creates");
         RandomUser randomUser = new RandomUser();
         CreateUserBodyModel createUserBody = new CreateUserBodyModel();
         createUserBody.setName(randomUser.getName());
         createUserBody.setJob(randomUser.getJob());
 
-        CreateUserResponseModel response = given()
-                .body(createUserBody)
-                .log().uri()
-                .log().body()
-                .contentType(JSON)
-                .when()
-                .post(BASIC_URL + "api/users")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(201)
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/createUserTest.json"))
-                .extract().as(CreateUserResponseModel.class);
+        CreateUserResponseModel response = step("Make  request", () ->
+                given(createnRequestSpec)
+                        .body(createUserBody)
+                        .when()
+                        .post()
+                        .then()
+                        .spec(сreateResponseSpec)
+                        .body(matchesJsonSchemaInClasspath("hw_18/schema/createUserTest.json"))
+                        .extract().as(CreateUserResponseModel.class));
+
+        step("Verify response name", () ->
+                assertThat(response.getName()).isEqualTo(createUserBody.getName()));
+        step("Verify response job", () ->
+                assertThat(response.getJob()).isEqualTo(createUserBody.getJob()));
     }
 
     @Test
     void updateUserTest() {
         RandomUser randomUser = new RandomUser();
-        String name = randomUser.getName();
-        String job = randomUser.getJob();
+        UpdateUserBodyModel updateUserBody = new UpdateUserBodyModel();
+        updateUserBody.setName(randomUser.getName());
+        updateUserBody.setJob(randomUser.getJob());
         String id = "2";
-        HashMap<String, String> body = new HashMap<>();
-        body.put("name", name);
-        body.put("job", job);
 
-        Gson gson = new Gson();
-
-        given().body(gson.toJson(body))
-                .log().uri()
-                .log().body()
-                .contentType(JSON)
+        UpdateUserResponseModel response = given(userRequestSpec)
+                .body(updateUserBody)
                 .when()
-                .put(BASIC_URL + "api/users/" + id)
+                .put(id)
                 .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .assertThat().body("name", equalTo(name))
-                .assertThat().body("job", equalTo(job))
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/updateUserTest.json"));
+                .spec(userResponseSpec)
+                .body(matchesJsonSchemaInClasspath("hw_18/schema/updateUserTest.json"))
+                .extract().as(UpdateUserResponseModel.class);
+
+        assertThat(response.getName()).isEqualTo(updateUserBody.getName());
+        assertThat(response.getJob()).isEqualTo(updateUserBody.getJob());
     }
+
 
     @Test
     void singleUserTest() {
+
         String id = "2";
         String url = "https://reqres.in/#support-heading";
-        given()
-                .log().uri()
-                .contentType(JSON)
+        String firstName = "Janet";
+        SingleUserResponse response = given(userRequestSpec)
                 .when()
-                .get(BASIC_URL + "api/users/" + id)
+                .get(id)
                 .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .assertThat().body("support.url", equalTo(url))
-                .assertThat().body("data.id", equalTo(Integer.parseInt(id)))
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/singleUserTest.json"));
+                .spec(userResponseSpec)
+                .body(matchesJsonSchemaInClasspath("hw_18/schema/singleUserTest.json"))
+                .extract().as(SingleUserResponse.class);
+
+        assertThat(response.getData().getId()).isEqualTo(Integer.parseInt(id));
+        assertThat(response.getData().getFirstName()).isEqualTo(firstName);
+        assertThat(response.getSupport().getUrl()).isEqualTo(url);
+
     }
 
     @Test
@@ -114,20 +117,22 @@ public class RegressTests {
 
     @Test
     void listUserTest() {
-        List<String> list = Arrays.asList("Lawson", "Ferguson", "Funke", "Fields", "Edwards", "Howell");
         Integer page = 2;
-        String url = "https://reqres.in/#support-heading";
-        given()
-                .log().uri()
-                .contentType(JSON)
-                .when()
-                .get(BASIC_URL + "api/users?page=2")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(200)
-                .assertThat().body("page", equalTo(page))
-                .assertThat().body("data.last_name", hasItems(list.toArray()))
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/listUserTest.json"));
+        ListUserResponseModel response = step("Make request", () ->
+                given(userRequestSpec)
+                        .when()
+                        .get("?page=2")
+                        .then()
+                        .spec(userResponseSpec)
+                        .body(matchesJsonSchemaInClasspath("hw_18/schema/listUserTest.json"))
+                        .extract().as(ListUserResponseModel.class));
+        step("Verify page number in response", () ->
+                Assertions.assertTrue(response.getPage() == page, "Number page doesn`t match"));
+//        assertThat(response.getClass());
+      ArrayList<DataResponseModel> arrayList= response.getData();
+        step("Verify response id[1]", () -> assertEquals(8, arrayList.get(1).getId()));
+        step("Verify response", () -> assertEquals(6, arrayList.size()));
+//        step("Verify page number in response", ()->
+//                Assertions.assertThat().body("data.last_name", hasItems(list.toArray())));
     }
 }

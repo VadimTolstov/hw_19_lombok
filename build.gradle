@@ -86,17 +86,17 @@ test {
     systemProperties(System.getProperties())
 }
 
-task simple_test(type: Test) {
+task api_test(type: Test) {
     useJUnitPlatform {
-        includeTags("simple")
+        includeTags("APITEST")
     }
 }
-
-task remote_test(type: Test) {
-    useJUnitPlatform {
-        includeTags("remote")
-    }
-}
+//
+//task remote_test(type: Test) {
+//    useJUnitPlatform {
+//        includeTags("remote")
+//    }
+//}
 
 
 

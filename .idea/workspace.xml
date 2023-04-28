@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f81cc11-1155-4d48-a1c0-39a8229b7e9f" name="Changes" comment="v0.5">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/helpers/CustomAllureListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/ListUserResponseModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/SingleSupportData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/SingleUserData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/SingleUserResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/UpdateUserBodyModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/UpdateUserResponseModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/list_models/DataResponseModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/specs/CreateSpec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/specs/UserSpec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/tpl/request.ftl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/tpl/response.ftl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/helpers/ApiTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/FailedRegistrationBodyModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/FailedRegistrationResponseModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/hw_19_lombok/RegressTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/RegressTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/CreateUserResponseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/CreateUserResponseModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/hw_19_lombok/specs/UserSpec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/specs/UserSpec.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +61,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="AnnotationType" />
       </list>
     </option>
   </component>
@@ -88,10 +79,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/code/rest-api-18"
+    "last_opened_file_path": "D:/program/IntelliJIDEA/Proect/hw_19_lombok"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="hw_19_lombok.helpers" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\program\IntelliJIDEA\Proect\hw_19_lombok\src\test\java\hw_19_lombok" />
       <recent name="D:\program\IntelliJIDEA\Proect\hw_19_lombok\src\test\resources" />
@@ -102,8 +96,8 @@
       <recent name="hw_19_lombok" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RegressTests.listUserTest">
-    <configuration name="RegressTests.failedRegistrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.RegressTests.сreateUserTest">
+    <configuration name="RegressTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -116,31 +110,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;hw_19_lombok.RegressTests.failedRegistrationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="RegressTests.listUserTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;hw_19_lombok.RegressTests.listUserTest&quot;" />
+            <option value="&quot;hw_19_lombok.RegressTests&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -223,13 +193,35 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="hw_19_lombok [allureServe]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="allureServe" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.RegressTests.listUserTest" />
-        <item itemvalue="Gradle.RegressTests.singleUserTest" />
-        <item itemvalue="Gradle.RegressTests.updateUserTest" />
-        <item itemvalue="Gradle.RegressTests.failedRegistrationTest" />
         <item itemvalue="Gradle.RegressTests.сreateUserTest" />
+        <item itemvalue="Gradle.hw_19_lombok [allureServe]" />
+        <item itemvalue="Gradle.RegressTests" />
+        <item itemvalue="Gradle.RegressTests.updateUserTest" />
+        <item itemvalue="Gradle.RegressTests.singleUserTest" />
       </list>
     </recent_temporary>
   </component>
@@ -249,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682448971004</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="v0.5">
+      <created>1682614918884</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682614918884</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

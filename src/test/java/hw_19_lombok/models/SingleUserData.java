@@ -13,7 +13,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SingleUserData {
-  //  String supportUrl;
     Integer id;
     String email;
     @JsonProperty("first_name")

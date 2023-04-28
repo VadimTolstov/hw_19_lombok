@@ -1,40 +1,38 @@
 package hw_19_lombok;
 
-import com.google.gson.Gson;
+import hw_19_lombok.helpers.ApiTest;
 import hw_19_lombok.models.*;
 import hw_19_lombok.models.list_models.DataResponseModel;
 import hw_19_lombok.testdata.RandomUser;
-import org.junit.jupiter.api.Assertions;
+import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static hw_19_lombok.specs.CreateSpec.createnRequestSpec;
 import static hw_19_lombok.specs.CreateSpec.сreateResponseSpec;
-import static hw_19_lombok.specs.UserSpec.userRequestSpec;
-import static hw_19_lombok.specs.UserSpec.userResponseSpec;
+import static hw_19_lombok.specs.UserSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("Api Regress Tests")
+@Owner("Vadim Tolstov")
 public class RegressTests {
 
-    private final String BASIC_URL = "https://reqres.in/";
-
     @Test
-    void сreateUserTest() {
-        step("Creates");
+    @ApiTest
+    @DisplayName("Create request")
+        void сreateUserTest() {
         RandomUser randomUser = new RandomUser();
         CreateUserBodyModel createUserBody = new CreateUserBodyModel();
         createUserBody.setName(randomUser.getName());
         createUserBody.setJob(randomUser.getJob());
 
-        CreateUserResponseModel response = step("Make  request", () ->
+        CreateUserResponseModel response = step("Make  request post", () ->
                 given(createnRequestSpec)
                         .body(createUserBody)
                         .when()
@@ -51,6 +49,8 @@ public class RegressTests {
     }
 
     @Test
+    @ApiTest
+    @DisplayName("Update request")
     void updateUserTest() {
         RandomUser randomUser = new RandomUser();
         UpdateUserBodyModel updateUserBody = new UpdateUserBodyModel();
@@ -58,66 +58,76 @@ public class RegressTests {
         updateUserBody.setJob(randomUser.getJob());
         String id = "2";
 
-        UpdateUserResponseModel response = given(userRequestSpec)
-                .body(updateUserBody)
-                .when()
-                .put(id)
-                .then()
-                .spec(userResponseSpec)
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/updateUserTest.json"))
-                .extract().as(UpdateUserResponseModel.class);
-
-        assertThat(response.getName()).isEqualTo(updateUserBody.getName());
-        assertThat(response.getJob()).isEqualTo(updateUserBody.getJob());
+        UpdateUserResponseModel response = step("Обновление данных user " + id, () ->
+                given(userRequestSpec)
+                        .body(updateUserBody)
+                        .when()
+                        .put(id)
+                        .then()
+                        .spec(userResponseSpec)
+                        .body(matchesJsonSchemaInClasspath("hw_18/schema/updateUserTest.json"))
+                        .extract().as(UpdateUserResponseModel.class));
+        step("Verify response name", () ->
+                assertThat(response.getName()).isEqualTo(updateUserBody.getName()));
+        step("Verify response job", () ->
+                assertThat(response.getJob()).isEqualTo(updateUserBody.getJob()));
     }
 
-
     @Test
+    @ApiTest
+    @DisplayName("Single request")
     void singleUserTest() {
-
         String id = "2";
         String url = "https://reqres.in/#support-heading";
         String firstName = "Janet";
-        SingleUserResponse response = given(userRequestSpec)
-                .when()
-                .get(id)
-                .then()
-                .spec(userResponseSpec)
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/singleUserTest.json"))
-                .extract().as(SingleUserResponse.class);
 
-        assertThat(response.getData().getId()).isEqualTo(Integer.parseInt(id));
-        assertThat(response.getData().getFirstName()).isEqualTo(firstName);
-        assertThat(response.getSupport().getUrl()).isEqualTo(url);
+        SingleUserResponse response = step("Make  request get", () ->
+                given(userRequestSpec)
+                        .when()
+                        .get(id)
+                        .then()
+                        .spec(userResponseSpec)
+                        .body(matchesJsonSchemaInClasspath("hw_18/schema/singleUserTest.json"))
+                        .extract().as(SingleUserResponse.class));
+
+        step("Verify response id", () ->
+                assertThat(response.getData().getId()).isEqualTo(Integer.parseInt(id)));
+        step("Verify response firstName", () ->
+                assertThat(response.getData().getFirstName()).isEqualTo(firstName));
+        step("Verify response url", () ->
+                assertThat(response.getSupport().getUrl()).isEqualTo(url));
 
     }
 
     @Test
+    @ApiTest
+    @DisplayName("400 request")
     void failedRegistrationTest() {
         RandomUser randomUser = new RandomUser();
-        String email = randomUser.getEmail();
+        FailedRegistrationBodyModel failedBody = new FailedRegistrationBodyModel();
+        failedBody.setEmail(randomUser.getEmail());
         String error = "Missing password";
-        HashMap<String, String> body = new HashMap<>();
-        body.put("email", email);
 
-        Gson gson = new Gson();
-        given().body(gson.toJson(body))
-                .log().uri()
-                .log().body()
-                .contentType(JSON)
-                .when()
-                .post(BASIC_URL + "api/login/")
-                .then()
-                .log().status()
-                .log().body()
-                .statusCode(400)
-                .assertThat().body("error", equalTo(error))
-                .body(matchesJsonSchemaInClasspath("hw_18/schema/failedRegistrationTest.json"));
+        FailedRegistrationResponseModel response = step("Make  request post", () ->
+                given(failedRequestSpec).
+                        body(failedBody)
+                        .when()
+                        .post()
+                        .then()
+                        .spec(failedResponseSpec)
+                        .body(matchesJsonSchemaInClasspath("hw_18/schema/failedRegistrationTest.json"))
+                        .extract().as(FailedRegistrationResponseModel.class));
+
+        step("Verify response error", () ->
+                assertThat(response.getError()).isEqualTo(error));
     }
 
     @Test
+    @ApiTest
+    @DisplayName("Request a list of users")
     void listUserTest() {
         Integer page = 2;
+        String avatar = "https://reqres.in/img/faces/7-image.jpg";
         ListUserResponseModel response = step("Make request", () ->
                 given(userRequestSpec)
                         .when()
@@ -126,13 +136,16 @@ public class RegressTests {
                         .spec(userResponseSpec)
                         .body(matchesJsonSchemaInClasspath("hw_18/schema/listUserTest.json"))
                         .extract().as(ListUserResponseModel.class));
+
+        ArrayList<DataResponseModel> arrayList = response.getData();
         step("Verify page number in response", () ->
-                Assertions.assertTrue(response.getPage() == page, "Number page doesn`t match"));
-//        assertThat(response.getClass());
-      ArrayList<DataResponseModel> arrayList= response.getData();
-        step("Verify response id[1]", () -> assertEquals(8, arrayList.get(1).getId()));
-        step("Verify response", () -> assertEquals(6, arrayList.size()));
-//        step("Verify page number in response", ()->
-//                Assertions.assertThat().body("data.last_name", hasItems(list.toArray())));
+                assertThat(response.getPage()).isEqualTo(page));
+        step("Verify response id[1]", () ->
+                assertEquals(8, arrayList.get(1).getId()));
+        step("Verify response", () ->
+                assertEquals(6, arrayList.size()));
+        step("Verify response avatar[0]", () ->
+                assertEquals(avatar, arrayList.get(0).getAvatar()));
+
     }
 }

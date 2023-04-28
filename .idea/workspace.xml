@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f81cc11-1155-4d48-a1c0-39a8229b7e9f" name="Changes" comment="v0.5">
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/helpers/ApiTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/FailedRegistrationBodyModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/models/FailedRegistrationResponseModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/hw_19_lombok/RegressTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/RegressTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/hw_19_lombok/specs/UserSpec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/hw_19_lombok/specs/UserSpec.java" afterDir="false" />
+    <list default="true" id="1f81cc11-1155-4d48-a1c0-39a8229b7e9f" name="Changes" comment="v1.0">
+      <change beforePath="$PROJECT_DIR$/notifications/config.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +81,7 @@
       <recent name="hw_19_lombok.helpers" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\program\IntelliJIDEA\Proect\hw_19_lombok" />
       <recent name="D:\program\IntelliJIDEA\Proect\hw_19_lombok\src\test\java\hw_19_lombok" />
       <recent name="D:\program\IntelliJIDEA\Proect\hw_19_lombok\src\test\resources" />
     </key>
@@ -248,11 +243,40 @@
       <option name="project" value="LOCAL" />
       <updated>1682614918884</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="v1.0">
+      <created>1682668761256</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1682668761256</updated>
+    </task>
+    <task id="LOCAL-00004" summary="v1.0">
+      <created>1682668813828</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682668813828</updated>
+    </task>
+    <task id="LOCAL-00005" summary="v1.0">
+      <created>1682670964238</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682670964238</updated>
+    </task>
+    <task id="LOCAL-00006" summary="v1.0">
+      <created>1682671438114</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1682671438114</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v0.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="v0.5" />
+    <MESSAGE value="v1.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.0" />
   </component>
 </project>

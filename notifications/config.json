@@ -1,0 +1,17 @@
+{
+  "base": {
+    "logo": "",
+    "project": "HW",
+    "environment": "Dev",
+    "comment": "any comment here, @DianaTolstovaa",
+    "reportLink": "https://jenkins.autotests.cloud",
+    "language": "ru",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "5808401119:AAE1EKXe3shqISl8YdynKeQ89hgsuFtDgsU",
+    "chat": "-1001904240862",
+    "replyTo": ""
+  }
+}

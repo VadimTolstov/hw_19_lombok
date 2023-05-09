@@ -18,14 +18,15 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Api Regress Tests")
 @Owner("Vadim Tolstov")
 @Story("Это @Stories класса")
-public class RegressTests {
+public class RegressGroovyTests {
     private static String map;
-
     @Test
     @ApiTest
     @Story("Это @Stories теста")
@@ -33,7 +34,7 @@ public class RegressTests {
     @Severity(SeverityLevel.CRITICAL)
     @Link(value = "DEMOQA Practice Form", url = "https://demoqa.com/automation-practice-form")
     @DisplayName("Create request")
-    void сreateUserTest() {
+        void сreateUserTest() {
         RandomUser randomUser = new RandomUser();
         CreateUserBodyModel createUserBody = new CreateUserBodyModel();
         createUserBody.setName(randomUser.getName());
@@ -54,7 +55,7 @@ public class RegressTests {
         step("Verify response job", () ->
                 assertThat(response.getJob()).isEqualTo(createUserBody.getJob()));
         map = response.getName();
-        System.out.println("это " + map);
+        System.out.println("это "+ map);
     }
 
     @Test
@@ -135,7 +136,9 @@ public class RegressTests {
     @ApiTest
     @DisplayName("Request a list of users")
     void listUserTest() {
+        Integer perPage = 6;
         Integer page = 2;
+        String firstName = "Michael";
         String avatar = "https://reqres.in/img/faces/7-image.jpg";
         ListUserResponseModel response = step("Make request", () ->
                 given(userRequestSpec)
@@ -144,6 +147,15 @@ public class RegressTests {
                         .then()
                         .spec(userResponseSpec)
                         .body(matchesJsonSchemaInClasspath("hw_18/schema/listUserTest.json"))
+                        .and()
+                        .body("data.findAll{it.email =~/.*?@reqres.in/}.email.flatten()",
+                                hasItem("lindsay.ferguson@reqres.in"))
+                        .and()
+                        .body("data.findAll{it.last_name =~/^\\w{1,10}$/}.last_name.flatten()",
+                                hasSize(perPage))
+                        .and()
+                        .body("data.findAll{it.first_name =~/.*?e/}.first_name.flatten()",
+                                hasItem(firstName))
                         .extract().as(ListUserResponseModel.class));
 
         ArrayList<DataResponseModel> arrayList = response.getData();
@@ -155,6 +167,5 @@ public class RegressTests {
                 assertEquals(6, arrayList.size()));
         step("Verify response avatar[0]", () ->
                 assertEquals(avatar, arrayList.get(0).getAvatar()));
-
     }
 }

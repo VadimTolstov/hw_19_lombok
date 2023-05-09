@@ -155,6 +155,6 @@ public class RegressTests {
                 assertEquals(6, arrayList.size()));
         step("Verify response avatar[0]", () ->
                 assertEquals(avatar, arrayList.get(0).getAvatar()));
-
+//1
     }
 }

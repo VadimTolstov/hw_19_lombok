@@ -213,11 +213,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.RegressTests" />
-        <item itemvalue="Gradle.RegressTests.listUserTest" />
         <item itemvalue="Gradle.RegressTests.сreateUserTest" />
-        <item itemvalue="Gradle.hw_19_lombok [allureServe]" />
         <item itemvalue="Gradle.RegressTests.updateUserTest" />
+        <item itemvalue="Gradle.RegressTests.listUserTest" />
+        <item itemvalue="Gradle.RegressTests" />
+        <item itemvalue="Gradle.hw_19_lombok [allureServe]" />
       </list>
     </recent_temporary>
   </component>
